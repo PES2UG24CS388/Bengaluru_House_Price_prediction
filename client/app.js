@@ -37,7 +37,7 @@ function onClickedEstimatePrice() {
     var estPrice = document.getElementById("uiEstimatedPrice");
 
     var url =
-        "http://127.0.0.1:5000/predict_home_price";
+        "https://ghardheko.onrender.com/predict_home_price";
 
     $.post(url, {
 
@@ -69,7 +69,7 @@ function onPageLoad() {
 
     console.log("Document loaded");
 
-    var url = "http://127.0.0.1:5000/get_location_names";
+    var url = "https://ghardheko.onrender.com/get_location_names";
 
     $.get(url, function(data, status) {
 
