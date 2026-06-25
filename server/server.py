@@ -1,9 +1,12 @@
-from flask import Flask, jsonify,request
-import util
+from flask import Flask, jsonify, request
 from flask_cors import CORS
+import util
 
 app = Flask(__name__)
 CORS(app)
+
+# Load model and locations when server starts
+util.load_saved_artifacts()
 
 @app.route('/')
 def home():
@@ -17,12 +20,13 @@ def get_location_names():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route('/predict_home_price',methods=['POST'])
+@app.route('/predict_home_price', methods=['POST'])
 def predict_home_price():
-    total_sqft=float(request.form['total_sqft'])
-    location=request.form['location']
-    bhk=int(request.form['bhk'])
-    bath=int(request.form['bath'])
+    total_sqft = float(request.form['total_sqft'])
+    location = request.form['location']
+    bhk = int(request.form['bhk'])
+    bath = int(request.form['bath'])
+
     response = jsonify({
         'estimated_price': util.get_estimated_price(
             location,
@@ -35,9 +39,6 @@ def predict_home_price():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-
 if __name__ == "__main__":
     print("Starting Python Flask Server For House Price Prediction...")
-    util.load_saved_artifacts()
-    print(util.get_estimated_price('1st phase JP Nagar',1000,3,3))
     app.run()
